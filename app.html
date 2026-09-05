@@ -12,15 +12,15 @@
 <meta property="og:title" content="タベポル｜今日のお店がすぐ決まるiPhoneアプリ">
 <meta property="og:description" content="いつものお店から「今日の一軒」を提案するiPhoneアプリ。アカウント不要、広告なし。">
 <meta property="og:url" content="https://isagiyoi.github.io/tabeporu-support/app.html">
-<meta property="og:image" content="https://isagiyoi.github.io/tabeporu-support/assets/icon/appicon-512.png">
-<meta property="og:image:width" content="512">
-<meta property="og:image:height" content="512">
-<meta property="og:image:alt" content="タベポルのアプリアイコン">
+<meta property="og:image" content="https://isagiyoi.github.io/tabeporu-support/assets/og/ogp-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="タベポル。いつものお店から「今日の一軒」を提案するiPhoneアプリ">
 <meta property="og:locale" content="ja_JP">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="タベポル｜今日のお店がすぐ決まるiPhoneアプリ">
 <meta name="twitter:description" content="いつものお店から「今日の一軒」を提案するiPhoneアプリ。アカウント不要、広告なし。">
-<meta name="twitter:image" content="https://isagiyoi.github.io/tabeporu-support/assets/icon/appicon-512.png">
+<meta name="twitter:image" content="https://isagiyoi.github.io/tabeporu-support/assets/og/ogp-1200x630.png">
 
 <link rel="icon" href="assets/icon/appicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/icon/appicon-180.png">
@@ -64,10 +64,15 @@ p{margin:0 0 1rem}
 /* 円弧（Loop Motif）。装飾なのでスクリーンリーダーからは隠す。 */
 .arcs{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
 .arcs span{position:absolute;border-radius:50%;border:56px solid transparent;display:block}
-.arc-warm{width:900px;height:900px;top:-560px;left:52%;border-top-color:var(--warm);
-  border-right-color:var(--warm);opacity:.30;transform:rotate(18deg)}
-.arc-green{width:1040px;height:1040px;top:-660px;left:-18%;border-bottom-color:var(--accent);
-  border-right-color:var(--accent);opacity:.24;transform:rotate(-8deg)}
+.arc-warm{width:900px;height:900px;top:-700px;left:52%;border-bottom-color:var(--warm);
+  border-right-color:var(--warm);opacity:.32;transform:rotate(14deg)}
+.arc-green{width:1000px;height:1000px;top:-830px;left:-24%;border-bottom-color:var(--accent);
+  border-right-color:var(--accent);opacity:.25;transform:rotate(-6deg)}
+/* 狭い画面では円弧が見出しに掛かるため、さらに上へ逃がす。 */
+@media(max-width:759px){
+  .arc-warm{width:620px;height:620px;top:-500px;left:34%}
+  .arc-green{width:680px;height:680px;top:-560px;left:-42%}
+}
 
 /* Hero */
 .hero{position:relative;padding:72px 0 64px}
@@ -105,6 +110,17 @@ ol.steps li::before{content:counter(step);color:var(--accent);font-weight:700;fo
 .calm li{padding-left:1.5em;position:relative}
 .calm li::before{content:"—";position:absolute;left:0;color:var(--warm);font-weight:700}
 
+/* 同じ見た目のセクションが続かないよう、全幅の背景帯を挟む。 */
+.band{background:var(--wash);border-bottom:0;
+  box-shadow:0 0 0 100vmax var(--wash);clip-path:inset(0 -100vmax)}
+/* 短いつなぎのセクションは少し詰める。 */
+.tight{padding-top:52px;padding-bottom:52px}
+
+/* アプリが実際に表示する「すすめる理由」の文言。 */
+.reasons{list-style:none;padding:0;margin:1.25rem 0 0;display:grid;gap:10px}
+.reasons li{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:12px 16px}
+
 /* タベポルについて（質問と回答・基本情報） */
 #about h3{margin:1.75rem 0 .4rem;font-size:1.1rem}
 #about h3:first-of-type{margin-top:1rem}
@@ -122,8 +138,10 @@ footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--muted);f
 @media(min-width:760px){
   .hero-inner{grid-template-columns:1.05fr .95fr;gap:56px}
   .hero-shot{justify-self:end;width:min(330px,42vw)}
-  .shots{grid-template-columns:repeat(3,1fr);gap:20px}
-  .shots img{width:100%;max-width:300px}
+  .shots{grid-template-columns:repeat(2,1fr);gap:28px;max-width:740px;margin-inline:auto}
+  .shots img{width:100%;max-width:320px}
+  .reasons{grid-template-columns:repeat(3,1fr)}
+  .tight{padding-top:64px;padding-bottom:64px}
   .split{grid-template-columns:1fr 1fr;gap:48px}
   .split.reverse .split-text{order:2}
   section{padding:88px 0}
@@ -139,20 +157,21 @@ footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--muted);f
     <div class="hero-inner">
       <div>
         <img class="appicon" src="assets/icon/appicon-180.png" width="84" height="84"
-             alt="タベポルのアプリアイコン">
+             decoding="async" alt="タベポルのアプリアイコン">
         <p class="eyebrow">タベポル</p>
         <h1>今日のお店が、<br>すぐ決まる。</h1>
         <p class="lead">いつものお店から「今日の一軒」を提案するiPhoneアプリです。</p>
         <p><a class="cta" href="https://apps.apple.com/jp/app/id6807250919">App Storeで見る</a></p>
-        <p class="muted">iPhone対応・無料・フード／ドリンク</p>
+        <p class="muted">iPhone専用・iOS&nbsp;26.0以上・無料</p>
       </div>
-      <img class="hero-shot" src="assets/screenshots/01_today_decides.png" width="607" height="1320"
-           alt="タベポルのTodayタブ。「今日の一軒」として登録済みのお店と、その場で決められる「ここに決める」ボタンが表示されている画面">
+      <img class="hero-shot" src="assets/screenshots/01_today_decides.png" width="607" height="1319"
+           fetchpriority="high" decoding="async"
+           alt="タベポルの今日の画面。「今日の一軒」として提案されたお店と、すすめる理由、その場で決められる「ここに決める」ボタンが表示されている">
     </div>
   </header>
 
   <!-- Problem -->
-  <section id="problem">
+  <section id="problem" class="tight">
     <h2>今日どこで食べる？</h2>
     <p class="lead">新しいお店を探したいわけじゃない。<br>
       でも、いつものお店の中から今日はどこに行くか決まらない。</p>
@@ -162,13 +181,20 @@ footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--muted);f
   <!-- Core Value -->
   <section id="core">
     <h2>いつものお店から、<br>今日の一軒。</h2>
-    <p>よく行くお店を登録すると、訪問の記録などをもとに「今日の一軒」を提案します。</p>
+    <p>よく行くお店を登録すると、前に行ってからの間隔や、いまの時間帯をもとに「今日の一軒」を提案します。
+      位置情報を許可していれば、現在地からの近さも考慮します。</p>
+    <p>提案には、そのお店をすすめる理由がひとこと添えられます。</p>
+    <ul class="reasons">
+      <li>「そろそろ、また行きたくなる頃。」</li>
+      <li>「久しぶりに、ここもよさそう。」</li>
+      <li>「まだ記憶に新しいお店。」</li>
+    </ul>
     <div class="shots">
-      <img src="assets/screenshots/01_today_decides.png" width="607" height="1320" loading="lazy"
-           alt="今日のおすすめ画面。おすすめのお店の名前と、前回からの経過日数が表示されている">
-      <img src="assets/screenshots/02_from_your_favorites.png" width="607" height="1320" loading="lazy"
+      <img src="assets/screenshots/02_from_your_favorites.png" width="607" height="1319" loading="lazy"
+           decoding="async"
            alt="お店一覧画面。登録したお店が最終訪問日と訪問回数とともに並んでいる">
-      <img src="assets/screenshots/03_decide_and_record.png" width="607" height="1320" loading="lazy"
+      <img src="assets/screenshots/03_decide_and_record.png" width="607" height="1319" loading="lazy"
+           decoding="async"
            alt="「ここに決める」を押したあとの画面。今日の一軒が決まり、訪問が記録されたことが表示されている">
     </div>
   </section>
@@ -177,12 +203,12 @@ footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--muted);f
   <section id="how">
     <h2>使い方はシンプル。</h2>
     <ol class="steps">
-      <li><span><h3>いつものお店を登録</h3>
-        <span class="muted">よく行くお店をまとめて追加します。</span></span></li>
-      <li><span><h3>今日のおすすめを見る</h3>
-        <span class="muted">登録したお店から「今日の一軒」が表示されます。</span></span></li>
-      <li><span><h3>「ここに決める」</h3>
-        <span class="muted">タップするだけで、その日のお店が決まります。</span></span></li>
+      <li><div><h3>いつものお店を登録</h3>
+        <span class="muted">よく行くお店をまとめて追加します。</span></div></li>
+      <li><div><h3>今日のおすすめを見る</h3>
+        <span class="muted">登録したお店から「今日の一軒」が表示されます。</span></div></li>
+      <li><div><h3>「ここに決める」</h3>
+        <span class="muted">タップするだけで、その日のお店が決まります。</span></div></li>
     </ol>
     <div class="note">
       <p style="margin:0">「ここに決める」で訪問も記録され、次のおすすめに反映されます。<br>
@@ -195,18 +221,19 @@ footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--muted);f
     <div class="split-text">
       <h2>いつものお店を、<br>まとめて登録。</h2>
       <p>駅名や地名でエリアを探し、表示された一覧から登録したいお店をまとめて追加できます。</p>
+      <p>行ったことのあるお店だけでなく、「行ってみたいお店」も候補に加えられます。</p>
     </div>
-    <img src="assets/screenshots/04_add_places.png" width="607" height="1320" loading="lazy"
+    <img src="assets/screenshots/04_add_places.png" width="607" height="1319" loading="lazy" decoding="async"
          alt="お店を追加する画面。エリアの一覧から複数のお店にチェックを入れ、まとめて追加しようとしている">
   </section>
 
   <!-- History -->
-  <section id="history" class="split reverse">
+  <section id="history" class="split reverse band">
     <div class="split-text">
       <h2>行ったお店を、<br>カレンダーで振り返る。</h2>
       <p>いつ、どのお店に行ったかを月ごとに振り返れます。</p>
     </div>
-    <img src="assets/screenshots/05_history.png" width="607" height="1320" loading="lazy"
+    <img src="assets/screenshots/05_history.png" width="607" height="1319" loading="lazy" decoding="async"
          alt="履歴画面。カレンダーに訪問した日の印が付き、選んだ日に行ったお店が表示されている">
   </section>
 
@@ -222,7 +249,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--muted);f
       <p>登録したお店と訪問履歴は、端末に保存されます。</p>
       <p class="muted"><a href="privacy.html">プライバシーポリシーを見る</a></p>
     </div>
-    <img src="assets/screenshots/06_privacy.png" width="607" height="1320" loading="lazy"
+    <img src="assets/screenshots/06_privacy.png" width="607" height="1319" loading="lazy" decoding="async"
          alt="タベポルについての画面。アプリ名、バージョン、プライバシーポリシーやサポートへのリンクが並んでいる">
   </section>
 
@@ -235,7 +262,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--muted);f
   </section>
 
   <!-- About / よくある質問 -->
-  <section id="about">
+  <section id="about" class="band">
     <h2>タベポルについて</h2>
 
     <h3>タベポルはどんなアプリですか？</h3>
@@ -249,6 +276,9 @@ footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--muted);f
     <p>タベポルは、口コミやランキングから新しいお店を探すことを中心にしたアプリではありません。
       自分が登録したお店をもとに、今日行く一軒を決めるためのアプリです。</p>
 
+    <h3>行ったことのないお店も登録できますか？</h3>
+    <p>はい。「行ってみたいお店」として候補に追加できます。まだ訪問していないお店も、今日の候補に入ります。</p>
+
     <h3>位置情報を使わなくても利用できますか？</h3>
     <p>はい。位置情報は任意です。位置情報を許可すると、登録したお店の中から現在地に近いお店を提案したり、
       近くのお店を追加したりできます。</p>
@@ -259,6 +289,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--muted);f
     <dl class="facts">
       <div><dt>名称</dt><dd>タベポル</dd></div>
       <div><dt>種類</dt><dd>iPhoneアプリ</dd></div>
+      <div><dt>必要環境</dt><dd>iOS 26.0以上（iPhone専用）</dd></div>
       <div><dt>用途</dt><dd>いつものお店から今日行く一軒を決める</dd></div>
       <div><dt>価格</dt><dd>無料</dd></div>
       <div><dt>カテゴリー</dt><dd>フード／ドリンク</dd></div>
@@ -299,7 +330,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--muted);f
   "alternateName": "Tabeporu",
   "applicationCategory": "LifestyleApplication",
   "applicationSubCategory": "フード／ドリンク",
-  "operatingSystem": "iOS",
+  "operatingSystem": "iOS 26.0以上",
   "inLanguage": "ja",
   "description": "タベポルは、いつものお店から「今日の一軒」を提案するiPhoneアプリです。新しい飲食店を探すのではなく、すでに知っているお店の中から今日行く一軒を決めることに特化しています。アカウント不要、広告なし、データ収集なし。",
   "url": "https://isagiyoi.github.io/tabeporu-support/app.html",
