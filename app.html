@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>タベポル｜今日のお店がすぐ決まるiPhoneアプリ</title>
-<meta name="description" content="「今日どこで食べる？」をすぐ決める。タベポルは、いつものお店から「今日の一軒」を提案するiPhoneアプリです。アカウント不要、広告なし。">
+<title>タベポル｜行きつけのお店から今日の一軒を決めるiPhoneアプリ</title>
+<meta name="description" content="「今日どこで食べる？」がすぐ決まる。タベポルは、行きつけのお店から今日の一軒を提案するiPhoneアプリです。ランチも夜の外食も、いつものお店から。アカウント不要・広告なし・無料。">
 <link rel="canonical" href="https://isagiyoi.github.io/tabeporu-support/app.html">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="タベポル">
-<meta property="og:title" content="タベポル｜今日のお店がすぐ決まるiPhoneアプリ">
-<meta property="og:description" content="いつものお店から「今日の一軒」を提案するiPhoneアプリ。アカウント不要、広告なし。">
+<meta property="og:title" content="タベポル｜行きつけのお店から今日の一軒を決めるiPhoneアプリ">
+<meta property="og:description" content="行きつけのお店から今日の一軒を提案するiPhoneアプリ。ランチも夜の外食も、いつものお店から。アカウント不要・広告なし・無料。">
 <meta property="og:url" content="https://isagiyoi.github.io/tabeporu-support/app.html">
 <meta property="og:image" content="https://isagiyoi.github.io/tabeporu-support/assets/og/ogp-1200x630.png">
 <meta property="og:image:width" content="1200">
@@ -18,9 +18,14 @@
 <meta property="og:image:alt" content="タベポル。いつものお店から「今日の一軒」を提案するiPhoneアプリ">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="タベポル｜今日のお店がすぐ決まるiPhoneアプリ">
-<meta name="twitter:description" content="いつものお店から「今日の一軒」を提案するiPhoneアプリ。アカウント不要、広告なし。">
+<meta name="twitter:title" content="タベポル｜行きつけのお店から今日の一軒を決めるiPhoneアプリ">
+<meta name="twitter:description" content="行きつけのお店から今日の一軒を提案するiPhoneアプリ。ランチも夜の外食も、いつものお店から。アカウント不要・広告なし・無料。">
 <meta name="twitter:image" content="https://isagiyoi.github.io/tabeporu-support/assets/og/ogp-1200x630.png">
+
+<!-- iOS SafariでApp Storeへの案内バナーを出すApple公式の指定。 -->
+<meta name="apple-itunes-app" content="app-id=6807250919">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="preload" as="image" href="assets/screenshots/01_today_decides.png" fetchpriority="high">
 
 <link rel="icon" href="assets/icon/appicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/icon/appicon-180.png">
@@ -103,9 +108,29 @@ section > p,.split-text p,#about > p{max-width:35em}
 .cta-sm{background:var(--accent);color:var(--accent-fg);text-decoration:none;font-weight:700;
   font-size:.9rem;padding:9px 18px;border-radius:980px;white-space:nowrap}
 @media(prefers-reduced-motion:reduce){.topbar{transition:none}}
+
+/* スマートフォンでは、親指の届く画面下にApp Storeへの導線を常に置く。 */
+.bottombar{position:fixed;left:0;right:0;bottom:0;z-index:20;
+  background:var(--bar);border-top:1px solid var(--line);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  transform:translateY(120%);visibility:hidden;
+  transition:transform .34s var(--ease),visibility .34s}
+.bottombar.show{transform:none;visibility:visible}
+.bottombar .cta{display:flex;width:100%;padding:14px 20px;min-height:50px}
+@media(prefers-reduced-motion:reduce){.bottombar{transition:none}}
+/* 上のバーはデスクトップ、下のバーはスマートフォン。両方は出さない。 */
+@media(min-width:760px){.bottombar{display:none}}
+@media(max-width:759px){.topbar{display:none}}
+
+/* キーボード操作で本文へ飛ばすためのリンク。 */
+.skip{position:absolute;left:-9999px;top:0;z-index:30;background:var(--accent);
+  color:var(--accent-fg);padding:12px 18px;border-radius:0 0 12px 0;font-weight:700;
+  text-decoration:none}
+.skip:focus{left:0}
 /* すりガラスが使えない環境では下の文字が透けてしまうため、不透明にする。 */
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  .topbar{background:var(--bg)}
+  .topbar,.bottombar{background:var(--bg)}
 }
 
 /* 円弧（Loop Motif）。装飾なのでスクリーンリーダーからは隠す。 */
@@ -193,12 +218,20 @@ ol.steps li::before{content:counter(step);color:var(--accent);font-weight:700;fo
   .facts dt{font-size:.85rem}
 }
 
+/* 本文の途中にもApp Storeへの導線を置く。 */
+.cta-row{margin-top:2.2rem}
+.cta-row .muted{display:block;margin-top:.75rem;font-size:.92rem}
 .final{text-align:center;padding:84px 0}
 .final h2{margin-bottom:1.6rem}
 .final p{max-width:none}
+.final .muted{margin-top:1.1rem;font-size:.95rem}
 footer{border-top:1px solid var(--line);padding:36px 0 64px;color:var(--muted);font-size:.95rem}
 .footer-links{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:14px;padding:0;list-style:none}
 .copyright{margin:0;font-size:.9rem}
+/* 画面下のバーがフッターに重ならないよう、footer の指定より後ろで上書きする。 */
+@media(max-width:759px){
+  footer{padding-bottom:calc(104px + env(safe-area-inset-bottom))}
+}
 
 /* スクロールに合わせて静かに出す。JSが動くときだけ効かせる。 */
 @media(prefers-reduced-motion:no-preference){
@@ -238,6 +271,8 @@ if(window.matchMedia&&matchMedia('(prefers-reduced-motion: no-preference)').matc
 </head>
 <body>
 
+<a class="skip" href="#main">本文へ移動</a>
+
 <div class="topbar" id="topbar">
   <div class="topbar-inner">
     <span class="topbar-brand"><img src="assets/icon/appicon-180.png" width="26" height="26" alt="" aria-hidden="true">タベポル</span>
@@ -245,7 +280,7 @@ if(window.matchMedia&&matchMedia('(prefers-reduced-motion: no-preference)').matc
   </div>
 </div>
 
-<main>
+<main id="main">
 
   <!-- Hero -->
   <header class="hero">
@@ -308,6 +343,8 @@ if(window.matchMedia&&matchMedia('(prefers-reduced-motion: no-preference)').matc
     <div class="note">
       <p><span class="nb">「ここに決める」で訪問も記録され、</span><span class="nb">次のおすすめに反映されます。</span><br><span class="nb">食後にもう一度アプリを開いて</span><span class="nb">訪問記録を付ける必要はありません。</span></p>
     </div>
+    <p class="cta-row"><a class="cta" href="https://apps.apple.com/jp/app/id6807250919">App Storeで見る</a>
+      <span class="muted">無料・アカウント不要・広告なし</span></p>
   </section>
 
   <!-- Add places -->
@@ -394,6 +431,7 @@ if(window.matchMedia&&matchMedia('(prefers-reduced-motion: no-preference)').matc
   <section class="final">
     <h2><span class="nb">今日のお店選びを、</span><span class="nb">少し楽に。</span></h2>
     <p><a class="cta" href="https://apps.apple.com/jp/app/id6807250919">App Storeでタベポルを見る</a></p>
+    <p class="muted"><span class="nb">iPhone専用・iOS&nbsp;26.0以上・無料。</span><span class="nb">アカウント登録は必要ありません。</span></p>
   </section>
 
   <footer>
@@ -407,10 +445,15 @@ if(window.matchMedia&&matchMedia('(prefers-reduced-motion: no-preference)').matc
 
 </main>
 
+<div class="bottombar" id="bottombar">
+  <a class="cta" href="https://apps.apple.com/jp/app/id6807250919">App Storeで見る（無料）</a>
+</div>
+
 <script>
 (function(){
   var root=document.documentElement;
   var bar=document.getElementById('topbar');
+  var bbar=document.getElementById('bottombar');
   var hero=document.querySelector('.hero');
   var reveal=root.classList.contains('js-reveal');
   var els=reveal?[].slice.call(document.querySelectorAll('.hero-inner > *, main > section > *')):[];
@@ -419,9 +462,10 @@ if(window.matchMedia&&matchMedia('(prefers-reduced-motion: no-preference)').matc
   function update(){
     ticking=false;
     /* 上部バーはヒーローを過ぎてから出す。 */
-    if(bar&&hero){
+    if(hero){
       var past=(window.pageYOffset||root.scrollTop) > hero.offsetTop+hero.offsetHeight-64;
-      bar.classList.toggle('show',past);
+      if(bar)bar.classList.toggle('show',past);
+      if(bbar)bbar.classList.toggle('show',past);
     }
     /* 画面に入ったものから順に出す。 */
     if(!els.length)return;

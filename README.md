@@ -232,6 +232,54 @@ FAQPage構造化データは追加していない（表示目的だけの追加�
 - ブランド名「タベポル」の文字色が背景に対して3.07で、WCAG AAの4.5に届いていなかった。
   装飾用の `--warm` とは別に、文字用の `--warm-text`（5.18）を用意した。
 
+## 流入と導線の強化（第4版）
+
+「検索でヒットする」「App Storeへ遷移する」「ダウンロードされる」を上げるための変更。
+
+**検索（Google）**
+
+- `sitemap.xml` を追加（3ページ）。`app.html` に `<link rel="sitemap">` も置いた。
+  **Search Consoleからのsitemap送信はまだ行っていない**（下の「残っている作業」参照）。
+- title / description を、実際に検索されそうな語に寄せた。
+  - title: 「タベポル｜行きつけのお店から今日の一軒を決めるiPhoneアプリ」
+  - description に「ランチ」「夜の外食」「行きつけ」を自然な文のまま入れた
+- ヒーロー画像を `<link rel="preload">` で先読み（LCPの改善）
+
+キーワードの詰め込み、AI向けの隠しテキスト、派生ページの量産はしていない。
+
+**App Storeへの遷移**
+
+- **Smart App Banner**（`<meta name="apple-itunes-app" content="app-id=6807250919">`）を追加。
+  iOS SafariでページのApple公式バナーが出て、App Storeを開く導線になる。
+  これが今回いちばん効く見込みの変更。
+- スマートフォンでは画面下に常時CTAバーを出す（親指の届く位置）。
+  デスクトップは従来どおり上部バー。両方は出さない。
+- 「使い方はシンプル。」を読み終えた直後にもCTAを追加した（動機がいちばん高い位置）。
+- 最終CTAの下に「iPhone専用・iOS 26.0以上・無料。アカウント登録は必要ありません。」を添え、
+  タップ前の不安を減らした。
+
+App Storeへのリンクは合計7か所（ヒーロー / 使い方の後 / 最終CTA / フッター / 基本情報 /
+上部バー / 下部バー）。
+
+**アクセシビリティ**
+
+- 本文へ飛ぶスキップリンクを追加（キーボード操作時のみ表示）。
+
+### 残っている作業（人間の操作が必要）
+
+1. Search Console → サイトマップ → `sitemap.xml` を送信する
+2. Smart App Bannerは**実機のiOS Safari**でしか出ない。iPhoneで
+   `https://isagiyoi.github.io/tabeporu-support/app.html` を開いて確認する
+
+### 見送ったこと
+
+- `index.html` / `privacy.html` から `app.html` への内部リンク追加。
+  クロール経路として有効だが、`index.html` は App Store Connect に
+  Support URL として登録済みのページのため、指示なく変更しない方針を優先した。
+- `robots.txt` は `isagiyoi.github.io` のルートに置く必要があり、
+  このリポジトリ（サブディレクトリ配信）からは設置できない。
+- ダークモード用のスクリーンショット。Simulatorでの再撮影が必要。
+
 ## 公開手順（人間の操作）
 
 タベポル v1.1 は現在App Store審査中のため、**まだ公開しない**。公開は次の順序で行う。
