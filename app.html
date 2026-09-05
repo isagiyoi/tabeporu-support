@@ -105,6 +105,16 @@ ol.steps li::before{content:counter(step);color:var(--accent);font-weight:700;fo
 .calm li{padding-left:1.5em;position:relative}
 .calm li::before{content:"—";position:absolute;left:0;color:var(--warm);font-weight:700}
 
+/* タベポルについて（質問と回答・基本情報） */
+#about h3{margin:1.75rem 0 .4rem;font-size:1.1rem}
+#about h3:first-of-type{margin-top:1rem}
+.facts{margin:2rem 0 0;padding:20px 22px;background:var(--card);border:1px solid var(--line);
+  border-radius:16px;display:grid;gap:10px}
+.facts div{display:grid;grid-template-columns:7.5em 1fr;gap:12px}
+.facts dt{color:var(--muted);margin:0}
+.facts dd{margin:0}
+@media(max-width:520px){.facts div{grid-template-columns:6.5em 1fr;gap:8px}}
+
 .final{text-align:center;padding:72px 0}
 footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--muted);font-size:.95rem}
 .footer-links{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:12px;padding:0;list-style:none}
@@ -224,6 +234,38 @@ footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--muted);f
       ランチでも、夜の外食でも、行きつけの飲食店の中から今日の店選びができます。</p>
   </section>
 
+  <!-- About / よくある質問 -->
+  <section id="about">
+    <h2>タベポルについて</h2>
+
+    <h3>タベポルはどんなアプリですか？</h3>
+    <p>タベポルは、普段利用しているお店の中から「今日の一軒」を提案するiPhoneアプリです。
+      新しい飲食店を探すことよりも、いつものお店から今日行く場所を決めることに特化しています。</p>
+
+    <h3>どんな人に向いていますか？</h3>
+    <p>外食することが多く、「行くお店はいくつかあるけれど、今日はどこにしよう」と迷う人に向いています。</p>
+
+    <h3>グルメ検索アプリとは何が違いますか？</h3>
+    <p>タベポルは、口コミやランキングから新しいお店を探すことを中心にしたアプリではありません。
+      自分が登録したお店をもとに、今日行く一軒を決めるためのアプリです。</p>
+
+    <h3>位置情報を使わなくても利用できますか？</h3>
+    <p>はい。位置情報は任意です。位置情報を許可すると、登録したお店の中から現在地に近いお店を提案したり、
+      近くのお店を追加したりできます。</p>
+
+    <h3>アカウント登録は必要ですか？</h3>
+    <p>不要です。登録したお店と訪問履歴は端末に保存されます。</p>
+
+    <dl class="facts">
+      <div><dt>名称</dt><dd>タベポル</dd></div>
+      <div><dt>種類</dt><dd>iPhoneアプリ</dd></div>
+      <div><dt>用途</dt><dd>いつものお店から今日行く一軒を決める</dd></div>
+      <div><dt>価格</dt><dd>無料</dd></div>
+      <div><dt>カテゴリー</dt><dd>フード／ドリンク</dd></div>
+      <div><dt>配信</dt><dd><a href="https://apps.apple.com/jp/app/id6807250919">App Store</a></dd></div>
+    </dl>
+  </section>
+
   <!-- Final CTA -->
   <section class="final">
     <h2>今日のお店選びを、少し楽に。</h2>
@@ -241,15 +283,29 @@ footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--muted);f
 
 </main>
 
+<!--
+  Google Search Central の Software app structured data の仕様に合わせている。
+  - applicationCategory はGoogleがサポートする値から選ぶ必要があり、"Food & Drink" は対象外。
+    実態（日常の店選びを助けるアプリ）に最も近い LifestyleApplication を使い、
+    App Store上のカテゴリー表記は applicationSubCategory に置く。
+  - aggregateRating / review は事実として確認できないため入れない。
+    そのぶんリッチリザルトの要件は満たさないが、捏造はしない。
+-->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
+  "@type": "MobileApplication",
   "name": "タベポル",
   "alternateName": "Tabeporu",
-  "applicationCategory": "Food & Drink",
+  "applicationCategory": "LifestyleApplication",
+  "applicationSubCategory": "フード／ドリンク",
   "operatingSystem": "iOS",
-  "url": "https://apps.apple.com/jp/app/id6807250919",
+  "inLanguage": "ja",
+  "description": "タベポルは、いつものお店から「今日の一軒」を提案するiPhoneアプリです。新しい飲食店を探すのではなく、すでに知っているお店の中から今日行く一軒を決めることに特化しています。アカウント不要、広告なし、データ収集なし。",
+  "url": "https://isagiyoi.github.io/tabeporu-support/app.html",
+  "downloadUrl": "https://apps.apple.com/jp/app/id6807250919",
+  "sameAs": "https://apps.apple.com/jp/app/id6807250919",
+  "image": "https://isagiyoi.github.io/tabeporu-support/assets/icon/appicon-512.png",
   "offers": {
     "@type": "Offer",
     "price": "0",

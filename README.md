@@ -61,6 +61,59 @@ python3 -m http.server 8765
 | キーボード | Tabでリンク・CTAへ移動でき、focus表示あり（`:focus-visible`） |
 | リンク | App Store・プライバシーポリシー・サポートいずれもHTTP 200 |
 
+## 検索・生成AI検索（AI Overviews / AI Mode）への考え方
+
+Google Search Central の
+[AI features and your website](https://developers.google.com/search/docs/appearance/ai-features)
+の記載に沿っている（2026-09-05 参照）。Googleは同ページで
+「AI OverviewsやAI Modeに出るための追加要件や特別な最適化はない」
+「新しい機械可読ファイル・AI用テキストファイル・専用マークアップを作る必要はなく、
+専用のstructured dataもない」と明記している。
+
+そのため、このページでやっているのは通常の検索向けの基本だけ。
+
+- クロール・インデックス・スニペット表示を妨げない（`robots` メタ指定なし、`nosnippet` なし。
+  リポジトリに `robots.txt` を置いていないため、Googlebotのブロックもない）
+- 重要な情報を画像ではなく**テキスト**で書く
+- タベポルでしか得られない独自情報を可視の本文として明記する
+  （新しい店を探すアプリではない／いつものお店から今日の一軒を決める／
+  「ここに決める」で決定と訪問記録が同時に終わる／食後に開き直す必要がない／
+  訪問の記録などをもとに提案が変わる／駅名・地名からまとめて登録できる／
+  アカウント不要・広告なし・データ収集なし／登録したお店と訪問履歴は端末に保存）
+- 「タベポルについて」に、実際に聞かれる質問だけを5問置く
+
+意図的にやっていないこと:
+
+- `llms.txt` などAI向けの独自ファイルの追加（Googleが不要と明記しているため）
+- AI向けの隠しテキスト、キーワード羅列
+- SEO目的のQ&A大量生成、内容が同じ派生ページの量産
+- 他のグルメアプリへの根拠のない比較・批判
+- 「AIに引用される」といった保証めいた表現
+
+## 構造化データ
+
+`app.html` に `MobileApplication` のJSON-LDを1つだけ置いている。
+[Software app structured data](https://developers.google.com/search/docs/appearance/structured-data/software-app)
+の仕様に合わせた（2026-09-05 参照）。
+
+- `@type`: `MobileApplication`（Googleがサポートする3種の1つ）
+- `applicationCategory`: **`LifestyleApplication`**。
+  Googleがサポートするカテゴリー値は22種類の固定リストで、`Food & Drink` は含まれない。
+  App Store上の「フード／ドリンク」は `applicationSubCategory` に置いて両立させている。
+- `offers`: price `0` / priceCurrency `JPY`
+- `downloadUrl` / `sameAs`: App Store URL、`image`: 実際のアプリアイコン、`url`: このページ自身
+
+> **リッチリザルトの要件は満たしていない。**
+> Googleの仕様では `name`・`offers` に加えて `aggregateRating` か `review` のどちらかが必須だが、
+> 事実として確認できる評価データがないため入れていない。
+> 評価・レビュー・DL数・受賞歴を捏造してまでリッチリザルトを狙わない、という判断。
+> 実際の評価が集まった時点で `aggregateRating` を追加すれば要件を満たせる。
+
+公開後に [Rich Results Test](https://search.google.com/test/rich-results) や
+[Schema Markup Validator](https://validator.schema.org/) で確認できる。
+
+FAQPage構造化データは追加していない（表示目的だけの追加はせず、可視本文の分かりやすさを優先）。
+
 ## 公開手順（人間の操作）
 
 タベポル v1.1 は現在App Store審査中のため、**まだ公開しない**。公開は次の順序で行う。
@@ -80,6 +133,29 @@ python3 -m http.server 8765
 
 > このリポジトリは `main` ブランチがそのまま GitHub Pages で公開される。
 > push した時点で公開されるため、上記1〜3が済むまで push しないこと。
+
+## 公開後にGoogleへ認識させる手順（公開してから実施）
+
+**公開前の現在は、Search Consoleの変更もインデックス登録のリクエストも行わないこと。**
+以下はページを公開したあとの作業。
+
+1. [Google Search Console](https://search.google.com/search-console) にサイトを登録し、所有権を確認する
+   （GitHub Pagesのサブディレクトリ配信のため、URLプレフィックス
+   `https://isagiyoi.github.io/tabeporu-support/` で登録する）
+2. URL検査ツールで `https://isagiyoi.github.io/tabeporu-support/app.html` を検査し、
+   クロール・インデックスの可否とレンダリング結果を確認する
+3. 問題がなければ「インデックス登録をリクエスト」する
+4. `https://isagiyoi.github.io/robots.txt` がGooglebotをブロックしていないことを確認する
+   （2026-09-05 時点では404＝ブロックなし。将来ルートに `robots.txt` が置かれた場合は要確認）
+5. `app.html` の `canonical` が公開URL自身
+   （`https://isagiyoi.github.io/tabeporu-support/app.html`）を指していることを確認する
+6. サイトに `sitemap.xml` を用意する場合は `app.html` を含める
+   （2026-09-05 時点ではsitemapなし。3ページだけなので必須ではない）
+7. title / meta description / 構造化データを
+   [Rich Results Test](https://search.google.com/test/rich-results) 等で確認する
+8. 公開後しばらくしてから、Search Consoleの検索パフォーマンスで流入を確認する
+9. Search Consoleで生成AI検索向けのレポート（Generative AI performance report 等）が
+   利用できる場合は、そちらも併せて確認する
 
 ### 公開後に検討してよいこと（今回は未実施）
 
