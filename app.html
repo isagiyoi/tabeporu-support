@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>タベポル｜今日のお店がすぐ決まるiPhoneアプリ</title>
+<meta name="description" content="「今日どこで食べる？」をすぐ決める。タベポルは、いつものお店から「今日の一軒」を提案するiPhoneアプリです。アカウント不要、広告なし。">
+<link rel="canonical" href="https://isagiyoi.github.io/tabeporu-support/app.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="タベポル">
+<meta property="og:title" content="タベポル｜今日のお店がすぐ決まるiPhoneアプリ">
+<meta property="og:description" content="いつものお店から「今日の一軒」を提案するiPhoneアプリ。アカウント不要、広告なし。">
+<meta property="og:url" content="https://isagiyoi.github.io/tabeporu-support/app.html">
+<meta property="og:image" content="https://isagiyoi.github.io/tabeporu-support/assets/icon/appicon-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:image:alt" content="タベポルのアプリアイコン">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="タベポル｜今日のお店がすぐ決まるiPhoneアプリ">
+<meta name="twitter:description" content="いつものお店から「今日の一軒」を提案するiPhoneアプリ。アカウント不要、広告なし。">
+<meta name="twitter:image" content="https://isagiyoi.github.io/tabeporu-support/assets/icon/appicon-512.png">
+
+<link rel="icon" href="assets/icon/appicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icon/appicon-180.png">
+
+<style>
+/* 既存のサポート／プライバシーページと同じ配色・書体の作法に揃える。 */
+:root{
+  color-scheme: light dark;
+  /* --muted は既存ページの #66736c だと本文サイズでコントラスト4.44となり
+     WCAG AAの4.5を下回るため、この紹介ページでは少しだけ暗くしている。 */
+  --bg:#f4f2ee; --text:#24352c; --muted:#5d6a63;
+  --card:rgba(255,255,255,.68); --accent:#4c6b57; --warm:#bc7b5c;
+  --line:rgba(76,107,87,.18); --accent-fg:#ffffff; --wash:#e2ece3;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#171a18; --text:#eef2ef; --muted:#aab5ae;
+    --card:rgba(255,255,255,.05); --accent:#a8c3b1; --warm:#d6a182;
+    --line:rgba(255,255,255,.12); --accent-fg:#14180f; --wash:#1d251f;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Segoe UI",sans-serif;
+  line-height:1.75; overflow-x:hidden;
+}
+main{max-width:960px;margin:0 auto;padding:0 22px}
+section{padding:64px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+.eyebrow{color:var(--warm);font-weight:700;letter-spacing:.04em;margin:0}
+h1{font-size:clamp(2.1rem,7vw,3.4rem);line-height:1.2;margin:.4rem 0 .6rem;letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,4.5vw,2.1rem);line-height:1.35;margin:0 0 1rem;letter-spacing:-.01em}
+h3{font-size:1.05rem;margin:0 0 .25rem}
+p{margin:0 0 1rem}
+.lead{font-size:clamp(1.05rem,2.4vw,1.2rem)}
+.muted{color:var(--muted)}
+
+/* 円弧（Loop Motif）。装飾なのでスクリーンリーダーからは隠す。 */
+.arcs{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.arcs span{position:absolute;border-radius:50%;border:56px solid transparent;display:block}
+.arc-warm{width:900px;height:900px;top:-560px;left:52%;border-top-color:var(--warm);
+  border-right-color:var(--warm);opacity:.30;transform:rotate(18deg)}
+.arc-green{width:1040px;height:1040px;top:-660px;left:-18%;border-bottom-color:var(--accent);
+  border-right-color:var(--accent);opacity:.24;transform:rotate(-8deg)}
+
+/* Hero */
+.hero{position:relative;padding:72px 0 64px}
+.hero-inner{position:relative;z-index:1;display:grid;gap:40px;align-items:center;
+  grid-template-columns:minmax(0,1fr)}
+.appicon{width:84px;height:84px;border-radius:20px;display:block;
+  box-shadow:0 6px 22px rgba(0,0,0,.10)}
+.hero-shot{justify-self:center;width:min(300px,72vw);height:auto;border-radius:26px;
+  box-shadow:0 18px 48px rgba(0,0,0,.14)}
+
+/* CTA */
+.cta{display:inline-block;background:var(--accent);color:var(--accent-fg);
+  text-decoration:none;font-weight:700;padding:15px 30px;border-radius:16px;
+  min-height:48px;line-height:1.4}
+.cta:hover{opacity:.92}
+a{color:var(--accent);font-weight:650}
+a:focus-visible,.cta:focus-visible{outline:3px solid var(--warm);outline-offset:3px;border-radius:8px}
+
+/* スクリーンショットの並び */
+.shots{display:grid;gap:24px;grid-template-columns:1fr;justify-items:center;margin-top:8px}
+.shots img{width:min(300px,78vw);height:auto;border-radius:24px;
+  box-shadow:0 12px 34px rgba(0,0,0,.12)}
+.split{display:grid;gap:32px;align-items:center;grid-template-columns:1fr}
+.split img{justify-self:center;width:min(280px,70vw);height:auto;border-radius:24px;
+  box-shadow:0 12px 34px rgba(0,0,0,.12)}
+
+/* 使い方 */
+ol.steps{list-style:none;counter-reset:step;padding:0;margin:0 0 1.25rem;display:grid;gap:14px}
+ol.steps li{counter-increment:step;background:var(--card);border:1px solid var(--line);
+  border-radius:16px;padding:16px 18px;display:flex;gap:14px;align-items:baseline}
+ol.steps li::before{content:counter(step);color:var(--accent);font-weight:700;font-size:1.1rem;
+  min-width:1.4em}
+.note{background:var(--wash);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.calm{list-style:none;padding:0;margin:0 0 1rem;display:grid;gap:10px}
+.calm li{padding-left:1.5em;position:relative}
+.calm li::before{content:"—";position:absolute;left:0;color:var(--warm);font-weight:700}
+
+.final{text-align:center;padding:72px 0}
+footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--muted);font-size:.95rem}
+.footer-links{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:12px;padding:0;list-style:none}
+
+@media(min-width:760px){
+  .hero-inner{grid-template-columns:1.05fr .95fr;gap:56px}
+  .hero-shot{justify-self:end;width:min(330px,42vw)}
+  .shots{grid-template-columns:repeat(3,1fr);gap:20px}
+  .shots img{width:100%;max-width:300px}
+  .split{grid-template-columns:1fr 1fr;gap:48px}
+  .split.reverse .split-text{order:2}
+  section{padding:88px 0}
+}
+</style>
+</head>
+<body>
+<main>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="arcs" aria-hidden="true"><span class="arc-warm"></span><span class="arc-green"></span></div>
+    <div class="hero-inner">
+      <div>
+        <img class="appicon" src="assets/icon/appicon-180.png" width="84" height="84"
+             alt="タベポルのアプリアイコン">
+        <p class="eyebrow">タベポル</p>
+        <h1>今日のお店が、<br>すぐ決まる。</h1>
+        <p class="lead">いつものお店から「今日の一軒」を提案するiPhoneアプリです。</p>
+        <p><a class="cta" href="https://apps.apple.com/jp/app/id6807250919">App Storeで見る</a></p>
+        <p class="muted">iPhone対応・無料・フード／ドリンク</p>
+      </div>
+      <img class="hero-shot" src="assets/screenshots/01_today_decides.png" width="607" height="1320"
+           alt="タベポルのTodayタブ。「今日の一軒」として登録済みのお店と、その場で決められる「ここに決める」ボタンが表示されている画面">
+    </div>
+  </header>
+
+  <!-- Problem -->
+  <section id="problem">
+    <h2>今日どこで食べる？</h2>
+    <p class="lead">新しいお店を探したいわけじゃない。<br>
+      でも、いつものお店の中から今日はどこに行くか決まらない。</p>
+    <p>タベポルは、そんな毎日の店選びを少しだけ楽にするアプリです。</p>
+  </section>
+
+  <!-- Core Value -->
+  <section id="core">
+    <h2>いつものお店から、<br>今日の一軒。</h2>
+    <p>よく行くお店を登録すると、訪問の記録などをもとに「今日の一軒」を提案します。</p>
+    <div class="shots">
+      <img src="assets/screenshots/01_today_decides.png" width="607" height="1320" loading="lazy"
+           alt="今日のおすすめ画面。おすすめのお店の名前と、前回からの経過日数が表示されている">
+      <img src="assets/screenshots/02_from_your_favorites.png" width="607" height="1320" loading="lazy"
+           alt="お店一覧画面。登録したお店が最終訪問日と訪問回数とともに並んでいる">
+      <img src="assets/screenshots/03_decide_and_record.png" width="607" height="1320" loading="lazy"
+           alt="「ここに決める」を押したあとの画面。今日の一軒が決まり、訪問が記録されたことが表示されている">
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how">
+    <h2>使い方はシンプル。</h2>
+    <ol class="steps">
+      <li><span><h3>いつものお店を登録</h3>
+        <span class="muted">よく行くお店をまとめて追加します。</span></span></li>
+      <li><span><h3>今日のおすすめを見る</h3>
+        <span class="muted">登録したお店から「今日の一軒」が表示されます。</span></span></li>
+      <li><span><h3>「ここに決める」</h3>
+        <span class="muted">タップするだけで、その日のお店が決まります。</span></span></li>
+    </ol>
+    <div class="note">
+      <p style="margin:0">「ここに決める」で訪問も記録され、次のおすすめに反映されます。<br>
+        食後にもう一度アプリを開いて訪問記録を付ける必要はありません。</p>
+    </div>
+  </section>
+
+  <!-- Add places -->
+  <section id="add" class="split">
+    <div class="split-text">
+      <h2>いつものお店を、<br>まとめて登録。</h2>
+      <p>駅名や地名でエリアを探し、表示された一覧から登録したいお店をまとめて追加できます。</p>
+    </div>
+    <img src="assets/screenshots/04_add_places.png" width="607" height="1320" loading="lazy"
+         alt="お店を追加する画面。エリアの一覧から複数のお店にチェックを入れ、まとめて追加しようとしている">
+  </section>
+
+  <!-- History -->
+  <section id="history" class="split reverse">
+    <div class="split-text">
+      <h2>行ったお店を、<br>カレンダーで振り返る。</h2>
+      <p>いつ、どのお店に行ったかを月ごとに振り返れます。</p>
+    </div>
+    <img src="assets/screenshots/05_history.png" width="607" height="1320" loading="lazy"
+         alt="履歴画面。カレンダーに訪問した日の印が付き、選んだ日に行ったお店が表示されている">
+  </section>
+
+  <!-- Privacy / Calm -->
+  <section id="privacy" class="split">
+    <div class="split-text">
+      <h2>静かに使えるアプリです。</h2>
+      <ul class="calm">
+        <li>アカウント不要。</li>
+        <li>広告なし。</li>
+        <li>データ収集なし。</li>
+      </ul>
+      <p>登録したお店と訪問履歴は、端末に保存されます。</p>
+      <p class="muted"><a href="privacy.html">プライバシーポリシーを見る</a></p>
+    </div>
+    <img src="assets/screenshots/06_privacy.png" width="607" height="1320" loading="lazy"
+         alt="タベポルについての画面。アプリ名、バージョン、プライバシーポリシーやサポートへのリンクが並んでいる">
+  </section>
+
+  <!-- Positioning -->
+  <section id="positioning">
+    <h2>新しいお店を探すより、<br>好きなお店をもっと楽しむ。</h2>
+    <p>タベポルは、グルメ検索や口コミを見るためのアプリではありません。</p>
+    <p>いつものお店の中から、今日行く一軒を決めるためのアプリです。<br>
+      ランチでも、夜の外食でも、行きつけの飲食店の中から今日の店選びができます。</p>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final">
+    <h2>今日のお店選びを、少し楽に。</h2>
+    <p><a class="cta" href="https://apps.apple.com/jp/app/id6807250919">App Storeでタベポルを見る</a></p>
+  </section>
+
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://apps.apple.com/jp/app/id6807250919">App Store</a></li>
+      <li><a href="privacy.html">プライバシーポリシー</a></li>
+      <li><a href="index.html">サポート</a></li>
+    </ul>
+    <p style="margin:0">Tabeporu</p>
+  </footer>
+
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "タベポル",
+  "alternateName": "Tabeporu",
+  "applicationCategory": "Food & Drink",
+  "operatingSystem": "iOS",
+  "url": "https://apps.apple.com/jp/app/id6807250919",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  }
+}
+</script>
+</body>
+</html>
