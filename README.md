@@ -98,16 +98,35 @@ Google Search Central の
 
 - `@type`: `MobileApplication`（Googleがサポートする3種の1つ）
 - `applicationCategory`: **`LifestyleApplication`**。
-  Googleがサポートするカテゴリー値は22種類の固定リストで、`Food & Drink` は含まれない。
-  App Store上の「フード／ドリンク」は `applicationSubCategory` に置いて両立させている。
+  Googleの Recommended properties にある「supported app types」は22種類の固定リストで、
+  `LifestyleApplication` は含まれ、`Food & Drink` は含まれない。
+- `applicationSubCategory`: 「フード／ドリンク」（App Store上の実際のカテゴリー）。
+  schema.orgとしては有効だが、**Googleの必須・推奨プロパティには入っておらず、
+  リッチリザルトでは使われない**。事実として正しいので情報として残しているだけ。
 - `offers`: price `0` / priceCurrency `JPY`
 - `downloadUrl` / `sameAs`: App Store URL、`image`: 実際のアプリアイコン、`url`: このページ自身
 
-> **リッチリザルトの要件は満たしていない。**
-> Googleの仕様では `name`・`offers` に加えて `aggregateRating` か `review` のどちらかが必須だが、
-> 事実として確認できる評価データがないため入れていない。
-> 評価・レビュー・DL数・受賞歴を捏造してまでリッチリザルトを狙わない、という判断。
-> 実際の評価が集まった時点で `aggregateRating` を追加すれば要件を満たせる。
+### aggregateRating / review を入れていない理由
+
+Googleの Software app 仕様（2026-09-05 参照 / ページ表記 Last updated 2025-12-10 UTC）の
+**Required properties** は、原文で次の3項目が並んでいる。
+
+| Required properties | 内容 |
+|---|---|
+| `name` | アプリ名 |
+| `offers.price` | 価格（無料なら `0`） |
+| **Rating or review** | "A rating or review of the app. **You must include one of the following properties:**" として `aggregateRating` または `review` |
+
+`applicationCategory` と `operatingSystem` は Recommended properties 側。
+つまり評価情報は現時点でも Required 扱いであり、
+**このページはリッチリザルトの要件を満たしていない。**
+
+それでも入れないのは、事実として確認できる評価データがないため。
+評価・レビュー・DL数・受賞歴を捏造してまでリッチリザルトを狙わない、という判断。
+実際の評価が集まった時点で `aggregateRating` を追加すれば要件を満たせる。
+
+リッチリザルトに出なくても、JSON-LD自体はページ内容と一致した事実のみで構成してあり、
+`name` / `offers.price` / `applicationCategory` / `operatingSystem` は仕様どおりに入っている。
 
 公開後に [Rich Results Test](https://search.google.com/test/rich-results) や
 [Schema Markup Validator](https://validator.schema.org/) で確認できる。
@@ -153,9 +172,12 @@ FAQPage構造化データは追加していない（表示目的だけの追加�
    （2026-09-05 時点ではsitemapなし。3ページだけなので必須ではない）
 7. title / meta description / 構造化データを
    [Rich Results Test](https://search.google.com/test/rich-results) 等で確認する
-8. 公開後しばらくしてから、Search Consoleの検索パフォーマンスで流入を確認する
-9. Search Consoleで生成AI検索向けのレポート（Generative AI performance report 等）が
-   利用できる場合は、そちらも併せて確認する
+8. 公開後しばらくしてから、**Search Console → 検索パフォーマンス**で検索流入を確認する。
+   AI Mode / AI Overviews 経由の流入も、専用レポートではなくこの検索パフォーマンス
+   （検索タイプ「ウェブ」）の集計に含まれる。Googleは
+   [AI features and your website](https://developers.google.com/search/docs/appearance/ai-features)
+   で「AI機能に表示されたサイトもSearch Consoleの全体の検索トラフィックに含まれ、
+   Performance reportの"Web" search typeで集計される」と明記している（2026-09-05 参照）
 
 ### 公開後に検討してよいこと（今回は未実施）
 
