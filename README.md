@@ -271,11 +271,24 @@ App Storeへのリンクは合計7か所（ヒーロー / 使い方の後 / 最�
 2. Smart App Bannerは**実機のiOS Safari**でしか出ない。iPhoneで
    `https://isagiyoi.github.io/tabeporu-support/app.html` を開いて確認する
 
+### 内部リンク（第5版・2026-09-13）
+
+第4版までは `app.html` へ辿り着くリンクが `sitemap.xml` 以外になく、
+Search Consoleでインデックス登録をリクエストしても登録されなかった。
+既に登録済みの `index.html` からのリンクをクロール経路にするため、以下を追加した。
+
+- `index.html` に「タベポルについて」セクションを追加し、
+  `app.html` へ「タベポルについて・アプリの詳しい紹介」というアンカーテキストでリンク
+  （「こちら」ではなくリンク先の内容が分かる文言にする、というGoogleの推奨に沿う）。
+  英語ブロックにも同様のセクションを追加。
+- 3ページ共通のフッターを「タベポルについて ｜ サポート ｜ プライバシーポリシー」に統一
+  （`app.html` は加えて App Store へのリンクも残している）。
+- `app.html` のスクロール連動の表示アニメーションに、2.5秒後に残りをすべて表示する
+  フォールバックを追加。スクロールしないレンダラーでも `opacity:0` の内容が残らないようにした。
+- `sitemap.xml` の `lastmod` を更新。
+
 ### 見送ったこと
 
-- `index.html` / `privacy.html` から `app.html` への内部リンク追加。
-  クロール経路として有効だが、`index.html` は App Store Connect に
-  Support URL として登録済みのページのため、指示なく変更しない方針を優先した。
 - `robots.txt` は `isagiyoi.github.io` のルートに置く必要があり、
   このリポジトリ（サブディレクトリ配信）からは設置できない。
 - ダークモード用のスクリーンショット。Simulatorでの再撮影が必要。

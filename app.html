@@ -436,9 +436,10 @@ if(window.matchMedia&&matchMedia('(prefers-reduced-motion: no-preference)').matc
 
   <footer>
     <ul class="footer-links">
-      <li><a href="https://apps.apple.com/jp/app/id6807250919">App Store</a></li>
-      <li><a href="privacy.html">プライバシーポリシー</a></li>
+      <li><a href="app.html" aria-current="page">タベポルについて</a></li>
       <li><a href="index.html">サポート</a></li>
+      <li><a href="privacy.html">プライバシーポリシー</a></li>
+      <li><a href="https://apps.apple.com/jp/app/id6807250919">App Store</a></li>
     </ul>
     <p class="copyright">© 2026 Tabeporu</p>
   </footer>
@@ -488,6 +489,12 @@ if(window.matchMedia&&matchMedia('(prefers-reduced-motion: no-preference)').matc
     addEventListener('scroll',onScroll,{passive:true});
     addEventListener('resize',onScroll,{passive:true});
     addEventListener('load',update);
+    /* スクロールが起きない環境（検索エンジンのレンダラー等）でも内容が隠れたままに
+       ならないよう、少し待ってから残りをすべて表示する。画面外で起きるので見た目は変わらない。 */
+    setTimeout(function(){
+      for(var i=0;i<els.length;i++)els[i].classList.add('in');
+      els=[];
+    },2500);
   }catch(e){
     /* 何かあっても内容は必ず見えるようにする。 */
     root.classList.remove('js-reveal');
